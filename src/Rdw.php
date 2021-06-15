@@ -20,8 +20,6 @@ class Rdw
      */
     public function find($license, array $types = ['info'])
     {
-        $data = (new RdwApi)->find($license, $types);
-        dd($data);
+        return (new RdwApi)->find($license, $types);
     }
-
 }
