@@ -1,0 +1,33 @@
+{
+    "name": "programic/laravel-rdw",
+    "license": "proprietary",
+    "type": "package",
+    "description": "Wrapper for the RDW OpenData API",
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "Programic",
+            "email": "development@programic.com",
+            "homepage": "https://programic.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Programic\\Rdw\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Programic\\Rdw\\RdwServiceProvider"
+            ]
+        }
+    }
+}
