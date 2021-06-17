@@ -13,7 +13,8 @@ class RdwApi
         'fuel'              => '8ys7-d773.json',
         'bodywork'          => 'vezc-m2t6.json',
         'bodywork_specific'  => 'jhie-znh9.json',
-        'vehicle_class'     => 'kmfi-hrps.json'
+        'vehicle_class'     => 'kmfi-hrps.json',
+        'transmission'      => 'r7cw-67gs.json',
     ];
 
     /**
@@ -42,17 +43,30 @@ class RdwApi
         $license = $this->formatLicense($license);
         $data = [];
         foreach ($types as $type) {
-            if (isset($this->endpoints[$type]) === false) {
+            if (isset($this->endpoints[$type]) === false || $type === 'transmission') {
                 continue;
             }
 
             try {
                 $response = (string) ($this->client->get("{$this->endpoints[$type]}?kenteken={$license}"))->getBody();
 
-                $data = array_merge($data, $this->formatResponse($response)[0]);
+                $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
             } catch(\Throwable $e) {
-                throw new \Exception('License not found');
+                throw new \Exception('License not found. Type:' . $type . ', License: ' . $license);
             }
+        }
+
+        if (in_array('transmission', $types) && isset($data['typegoedkeuringsnummer'])) {
+            $approvedKey = $data['typegoedkeuringsnummer'];
+
+            $approvedKeySplitted = explode('/', $approvedKey);
+            $yearSplitted = substr($approvedKeySplitted[0], 5, 7);
+            $approvedKeyFiltered = substr($approvedKeySplitted[0], 0, 3) .$yearSplitted . '/' . $approvedKeySplitted[1];
+            $variant = $data['variant'];
+
+            $response = (string) ($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"))->getBody();
+
+            $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
         }
 
         return $data;
