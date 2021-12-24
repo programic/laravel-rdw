@@ -59,14 +59,16 @@ class RdwApi
         if (in_array('transmission', $types) && isset($data['typegoedkeuringsnummer'])) {
             $approvedKey = $data['typegoedkeuringsnummer'];
 
-            $approvedKeySplitted = explode('/', $approvedKey);
-            $yearSplitted = substr($approvedKeySplitted[0], 5, 7);
-            $approvedKeyFiltered = substr($approvedKeySplitted[0], 0, 3) .$yearSplitted . '/' . $approvedKeySplitted[1];
-            $variant = $data['variant'];
+            if (strpos($approvedKey, '/') !== false) {
+                $approvedKeySplitted = explode('/', $approvedKey);
+                $yearSplitted = substr($approvedKeySplitted[0], 5, 7);
+                $approvedKeyFiltered = substr($approvedKeySplitted[0], 0, 3) . $yearSplitted . '/' . $approvedKeySplitted[1];
+                $variant = $data['variant'];
 
-            $response = (string) ($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"))->getBody();
+                $response = (string)($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"))->getBody();
 
-            $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
+                $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
+            }
         }
 
         return $data;
