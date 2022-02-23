@@ -24,6 +24,7 @@ class RdwApi
     {
         $this->client = new Client([
             'base_uri' => 'https://opendata.rdw.nl/resource/',
+            'verify' => false,
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json'
