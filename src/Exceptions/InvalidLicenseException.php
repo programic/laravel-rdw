@@ -6,8 +6,8 @@ use Exception;
 
 class InvalidLicenseException extends Exception
 {
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public function __construct($license)
     {
-        parent::__construct('Rdw api: Kenteken ongelding of onbekend', $code, $previous);
+        parent::__construct('Rdw api: Kenteken ongelding of onbekend: '. $license);
     }
 }
