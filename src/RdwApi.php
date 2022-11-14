@@ -3,6 +3,8 @@
 namespace Programic\Rdw;
 
 use GuzzleHttp\Client;
+use Programic\Rdw\Exceptions\InvalidLicenseException;
+use Programic\Rdw\Exceptions\UnknownLicenseDataException;
 
 class RdwApi
 {
@@ -42,6 +44,11 @@ class RdwApi
     public function find(string $license, array $types)
     {
         $license = $this->formatLicense($license);
+        
+        if (strlen($license) !== 6) {
+            throw new InvalidLicenseException();
+        }
+        
         $data = [];
         foreach ($types as $type) {
             if (isset($this->endpoints[$type]) === false || $type === 'transmission') {
@@ -53,7 +60,7 @@ class RdwApi
 
                 $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
             } catch(\Throwable $e) {
-                throw new \Exception('License not found. Type:' . $type . ', License: ' . $license);
+                throw new UnknownLicenseDataException($type, $license);
             }
         }
 
@@ -66,9 +73,13 @@ class RdwApi
                 $approvedKeyFiltered = substr($approvedKeySplitted[0], 0, 3) . $yearSplitted . '/' . $approvedKeySplitted[1];
                 $variant = $data['variant'];
 
-                $response = (string)($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"))->getBody();
+                try {
+                    $response = (string)($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"))->getBody();
 
-                $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
+                    $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
+                } catch(\Throwable $e) {
+                    throw new UnknownLicenseDataException('transmission', $license);
+                }
             }
         }
 
