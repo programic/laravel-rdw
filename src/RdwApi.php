@@ -52,20 +52,6 @@ class RdwApi
             throw new InvalidLicenseException();
         }
         
-        try {
-            $licenseData = ($this->client->get("{$this->licensenEndpoint}?kenteken={$license}"));
-            $responseStatusCode = $licenseData->getStatusCode() ?? 404;
-            $responseBody = $this->formatLicense((string)$licenseData->getBody());
-
-            if ($responseStatusCode !== 200 || empty($responseBody)) {
-                throw new UnknownLicenseDataException('license', $license);
-            }
-        } catch (UnknownLicenseDataException $exception) {
-            throw $exception;
-        } catch(\Throwable $exception) {
-            throw new UnreachableEndpointException('license');
-        }
-        
         $data = [];
         foreach ($types as $type) {
             if (isset($this->endpoints[$type]) === false || $type === 'transmission') {
