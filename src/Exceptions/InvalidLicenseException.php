@@ -8,6 +8,6 @@ class InvalidLicenseException extends Exception
 {
     public function __construct($license)
     {
-        parent::__construct('Rdw api: Kenteken ongelding of onbekend: '. $license);
+        parent::__construct('Rdw api: Invalid or unknown license: '. $license);
     }
 }

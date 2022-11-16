@@ -8,6 +8,6 @@ class UnreachableEndpointException extends Exception
 {
     public function __construct(string $type)
     {
-        parent::__construct('Rdw api: API endpoint (' . $type . ') niet beschikbaar');
+        parent::__construct('Rdw api: API endpoint (' . $type . ') not available');
     }
 }
