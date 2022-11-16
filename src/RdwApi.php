@@ -20,8 +20,6 @@ class RdwApi
         'transmission'      => 'r7cw-67gs.json',
     ];
 
-    protected $licensenEndpoint = '5xwu-cdq3.json';
-    
     /**
      * Constructor
      */
@@ -47,11 +45,11 @@ class RdwApi
     public function find(string $license, array $types)
     {
         $license = $this->formatLicense($license);
-        
+
         if (strlen($license) !== 6) {
             throw new InvalidLicenseException();
         }
-        
+
         $data = [];
         foreach ($types as $type) {
             if (isset($this->endpoints[$type]) === false || $type === 'transmission') {
@@ -60,7 +58,7 @@ class RdwApi
 
             try {
                 $response = ($this->client->get("{$this->endpoints[$type]}?kenteken={$license}"));
-                $statusCode = $licenseData->getStatusCode() ?? 404;
+                $statusCode = $response->getStatusCode() ?? 404;
 
                 if ($statusCode !== 200) {
                     throw new UnknownLicenseDataException('license', $license);
@@ -86,7 +84,7 @@ class RdwApi
 
                 try {
                     $response = ($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"));
-                    $statusCode = $licenseData->getStatusCode() ?? 404;
+                    $statusCode = $response->getStatusCode() ?? 404;
 
                     if ($statusCode !== 200) {
                         throw new UnknownLicenseDataException('license', $license);
