@@ -3,6 +3,9 @@
 namespace Programic\Rdw;
 
 use GuzzleHttp\Client;
+use Programic\Rdw\Exceptions\InvalidLicenseException;
+use Programic\Rdw\Exceptions\UnknownLicenseDataException;
+use Programic\Rdw\Exceptions\UnreachableEndpointException;
 
 class RdwApi
 {
@@ -17,6 +20,8 @@ class RdwApi
         'transmission'      => 'r7cw-67gs.json',
     ];
 
+    protected $licensenEndpoint = '5xwu-cdq3.json';
+    
     /**
      * Constructor
      */
@@ -42,6 +47,11 @@ class RdwApi
     public function find(string $license, array $types)
     {
         $license = $this->formatLicense($license);
+        
+        if (strlen($license) !== 6) {
+            throw new InvalidLicenseException();
+        }
+        
         $data = [];
         foreach ($types as $type) {
             if (isset($this->endpoints[$type]) === false || $type === 'transmission') {
@@ -49,11 +59,19 @@ class RdwApi
             }
 
             try {
-                $response = (string) ($this->client->get("{$this->endpoints[$type]}?kenteken={$license}"))->getBody();
+                $response = ($this->client->get("{$this->endpoints[$type]}?kenteken={$license}"));
+                $statusCode = $licenseData->getStatusCode() ?? 404;
 
-                $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
+                if ($statusCode !== 200) {
+                    throw new UnknownLicenseDataException('license', $license);
+                }
+
+                $responseBody = (string)$response->getBody();
+                $data = array_merge($data, $this->formatResponse($responseBody)[0] ?? []);
+            } catch (UnknownLicenseDataException $exception) {
+                throw $exception;
             } catch(\Throwable $e) {
-                throw new \Exception('License not found. Type:' . $type . ', License: ' . $license);
+                throw new UnreachableEndpointException($type);
             }
         }
 
@@ -66,9 +84,21 @@ class RdwApi
                 $approvedKeyFiltered = substr($approvedKeySplitted[0], 0, 3) . $yearSplitted . '/' . $approvedKeySplitted[1];
                 $variant = $data['variant'];
 
-                $response = (string)($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"))->getBody();
+                try {
+                    $response = ($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"));
+                    $statusCode = $licenseData->getStatusCode() ?? 404;
 
-                $data = array_merge($data, $this->formatResponse($response)[0] ?? []);
+                    if ($statusCode !== 200) {
+                        throw new UnknownLicenseDataException('license', $license);
+                    }
+
+                    $responseBody = (string)$response->getBody();
+                    $data = array_merge($data, $this->formatResponse($responseBody)[0] ?? []);
+                } catch (UnknownLicenseDataException $exception) {
+                    throw $exception;
+                } catch(\Throwable $e) {
+                    throw new UnreachableEndpointException($type);
+                }
             }
         }
 
