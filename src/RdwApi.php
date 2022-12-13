@@ -15,7 +15,7 @@ class RdwApi
         'info'              => 'm9d7-ebf2.json',
         'fuel'              => '8ys7-d773.json',
         'bodywork'          => 'vezc-m2t6.json',
-        'bodywork_specific'  => 'jhie-znh9.json',
+        'bodywork_specific' => 'jhie-znh9.json',
         'vehicle_class'     => 'kmfi-hrps.json',
         'transmission'      => 'r7cw-67gs.json',
     ];
@@ -105,7 +105,7 @@ class RdwApi
 
     protected function formatLicense(string $license): string
     {
-        $license = preg_replace("/[^a-zA-Z0-9]+/", "", $license);
+        $license = preg_replace("/[^a-zA-Z0-9]+/", "", str_replace('-', '', $license));
 
         return strtoupper($license);
     }
