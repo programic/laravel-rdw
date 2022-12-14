@@ -47,7 +47,7 @@ class RdwApi
         $license = $this->formatLicense($license);
 
         if (strlen($license) !== 6) {
-            throw new InvalidLicenseException();
+            throw new InvalidLicenseException($license);
         }
 
         $data = [];
