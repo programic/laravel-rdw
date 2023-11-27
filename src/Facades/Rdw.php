@@ -5,7 +5,7 @@ namespace Programic\Rdw\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Programic\Rdw\Rdw find(string $license, array $types)
+ * @method static \Programic\Rdw\Result find(string $license, array $types): Programic\Rdw\Result
  *
  * @see \Illuminate\Database\Schema\Builder
  */

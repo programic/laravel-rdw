@@ -40,7 +40,7 @@ class RdwApi
      *
      * @param string $license
      * @param array $types
-     * @return mixed
+     * @return Result
      */
     public function find(string $license, array $types)
     {
@@ -100,7 +100,7 @@ class RdwApi
             }
         }
 
-        return $data;
+        return new Result($data);
     }
 
     protected function formatLicense(string $license): string
