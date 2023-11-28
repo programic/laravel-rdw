@@ -84,9 +84,9 @@ namespace Programic\Rdw;
  */
 class Result
 {
-    private array $data;
+    private $data = [];
 
-    public function __construct(readonly array $rawData)
+    public function __construct(array $rawData)
     {
         $translation = require(__DIR__ . '/Translation/en.php');
 
