@@ -3,84 +3,84 @@
 namespace Programic\Rdw;
 
 /**
- * @property string $registration_number
- * @property string $vehicle_type
- * @property string $brand
- * @property string $trade_name
- * @property string $expiry_date_mot
- * @property string $configuration
- * @property string $number_of_seats
- * @property string $first_color
- * @property string $second_color
- * @property string $number_of_cylinders
- * @property string $cylinder_capacity
- * @property string $mass_empty_vehicle
- * @property string $max_permitted_vehicle_mass
- * @property string $ready_to_drive_mass
- * @property string $max_unbraked_towing_mass
- * @property string $max_braked_towing_mass
- * @property string $date_first_admission
- * @property string $date_first_registration_nl
- * @property string $awaiting_inspection
- * @property string $list_price
- * @property string $wam_insured
- * @property string $number_of_doors
- * @property string $number_of_wheels
- * @property string $distance_coupling_to_rear
- * @property string $distance_front_to_coupling
- * @property string $length
- * @property string $width
- * @property string $european_vehicle_category
- * @property string $chassis_number_location
- * @property string $technical_max_vehicle_mass
- * @property string $type
- * @property string $type_approval_number
- * @property string $variant
- * @property string $execution
- * @property string $eu_type_approval_change_sequence
- * @property string $power_ready_to_drive
- * @property string $wheelbase
- * @property string $export_indicator
- * @property string $outstanding_recall_indicator
- * @property string $taxi_indicator
- * @property string $max_combination_weight
- * @property string $number_of_wheelchair_spaces
- * @property string $max_supportive_speed
- * @property string $year_last_reg_mileage
- * @property string $mileage_judgment
- * @property string $mileage_judgment_code
- * @property string $possible_registration_holder
- * @property string $expiry_date_mot_dt
- * @property string $date_first_admission_dt
- * @property string $date_first_registration_nl_dt
- * @property string $efficiency_classification
- * @property string $api_registered_vehicle_axes
- * @property string $api_registered_vehicle_fuel
- * @property string $api_registered_vehicle_body
- * @property string $api_registered_vehicle_body_specific
- * @property string $api_registered_vehicle_class
- * @property string $fuel_sequence_number
- * @property string $fuel_description
- * @property string $fuel_consumption_outside
- * @property string $fuel_consumption_combined
- * @property string $fuel_consumption_urban
- * @property string $co2_emissions_combined
- * @property string $idle_noise_level
- * @property string $emission_code_description
- * @property string $environmental_class_eu_light
- * @property string $light_particle_emissions
- * @property string $net_max_power
- * @property string $soot_emissions
- * @property string $noise_level_speed
- * @property string $exhaust_emission_level
- * @property string $eu_type_approval_key
- * @property string $eec_variant_code
- * @property string $eec_execution_code
- * @property string $execution_modification_number
- * @property string $sequence_number
- * @property string $gearbox_type
- * @property string $lower_gear_limits
- * @property string $upper_gear_limits
+ * @property string|null $registration_number
+ * @property string|null $vehicle_type
+ * @property string|null $brand
+ * @property string|null $trade_name
+ * @property string|null $expiry_date_mot
+ * @property string|null $configuration
+ * @property string|null $number_of_seats
+ * @property string|null $first_color
+ * @property string|null $second_color
+ * @property string|null $number_of_cylinders
+ * @property string|null $cylinder_capacity
+ * @property string|null $mass_empty_vehicle
+ * @property string|null $max_permitted_vehicle_mass
+ * @property string|null $ready_to_drive_mass
+ * @property string|null $max_unbraked_towing_mass
+ * @property string|null $max_braked_towing_mass
+ * @property string|null $date_first_admission
+ * @property string|null $date_first_registration_nl
+ * @property string|null $awaiting_inspection
+ * @property string|null $list_price
+ * @property string|null $wam_insured
+ * @property string|null $number_of_doors
+ * @property string|null $number_of_wheels
+ * @property string|null $distance_coupling_to_rear
+ * @property string|null $distance_front_to_coupling
+ * @property string|null $length
+ * @property string|null $width
+ * @property string|null $european_vehicle_category
+ * @property string|null $chassis_number_location
+ * @property string|null $technical_max_vehicle_mass
+ * @property string|null $type
+ * @property string|null $type_approval_number
+ * @property string|null $variant
+ * @property string|null $execution
+ * @property string|null $eu_type_approval_change_sequence
+ * @property string|null $power_ready_to_drive
+ * @property string|null $wheelbase
+ * @property string|null $export_indicator
+ * @property string|null $outstanding_recall_indicator
+ * @property string|null $taxi_indicator
+ * @property string|null $max_combination_weight
+ * @property string|null $number_of_wheelchair_spaces
+ * @property string|null $max_supportive_speed
+ * @property string|null $year_last_reg_mileage
+ * @property string|null $mileage_judgment
+ * @property string|null $mileage_judgment_code
+ * @property string|null $possible_registration_holder
+ * @property string|null $expiry_date_mot_dt
+ * @property string|null $date_first_admission_dt
+ * @property string|null $date_first_registration_nl_dt
+ * @property string|null $efficiency_classification
+ * @property string|null $api_registered_vehicle_axes
+ * @property string|null $api_registered_vehicle_fuel
+ * @property string|null $api_registered_vehicle_body
+ * @property string|null $api_registered_vehicle_body_specific
+ * @property string|null $api_registered_vehicle_class
+ * @property string|null $fuel_sequence_number
+ * @property string|null $fuel_description
+ * @property string|null $fuel_consumption_outside
+ * @property string|null $fuel_consumption_combined
+ * @property string|null $fuel_consumption_urban
+ * @property string|null $co2_emissions_combined
+ * @property string|null $idle_noise_level
+ * @property string|null $emission_code_description
+ * @property string|null $environmental_class_eu_light
+ * @property string|null $light_particle_emissions
+ * @property string|null $net_max_power
+ * @property string|null $soot_emissions
+ * @property string|null $noise_level_speed
+ * @property string|null $exhaust_emission_level
+ * @property string|null $eu_type_approval_key
+ * @property string|null $eec_variant_code
+ * @property string|null $eec_execution_code
+ * @property string|null $execution_modification_number
+ * @property string|null $sequence_number
+ * @property string|null $gearbox_type
+ * @property string|null $lower_gear_limits
+ * @property string|null $upper_gear_limits
  */
 class Result
 {
@@ -97,9 +97,14 @@ class Result
         }
     }
 
-    public function __get($get)
+    public function __get($key)
     {
-        return data_get($this->data, $get);
+        return data_get($this->data, $key);
+    }
+
+    function __isset($key)
+    {
+        return isset($this->data[$key]);
     }
 }
 
