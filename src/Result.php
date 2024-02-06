@@ -97,6 +97,11 @@ class Result
         }
     }
 
+    public function toArray(): array
+    {
+        return $this->data;
+    }
+
     public function __get($key)
     {
         return data_get($this->data, $key);
