@@ -79,4 +79,6 @@ return [
     'type_versnellingsbak' => 'gearbox_type',
     'aantal_versnellingen_ondergrens' => 'lower_gear_limits',
     'aantal_versnellingen_bovengrens' => 'upper_gear_limits',
+    'netto_max_vermogen_elektrisch' => 'net_max_power_electric',
+    'klasse_hybride_elektrisch_voertuig' => 'class_hybrid_electric_vehicle',
 ];

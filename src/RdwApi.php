@@ -50,6 +50,7 @@ class RdwApi
             throw new InvalidLicenseException($license);
         }
 
+        $fuelTypes = [];
         $data = [];
         foreach ($types as $type) {
             if (isset($this->endpoints[$type]) === false || $type === 'transmission') {
@@ -66,6 +67,10 @@ class RdwApi
 
                 $responseBody = (string)$response->getBody();
                 $data = array_merge($data, $this->formatResponse($responseBody)[0] ?? []);
+
+                if ($type === 'fuel') {
+                    $fuelTypes = $this->formatResponse($responseBody);
+                }
             } catch (UnknownLicenseDataException $exception) {
                 throw $exception;
             } catch(\Throwable $e) {
@@ -83,7 +88,7 @@ class RdwApi
                 $variant = $data['variant'];
 
                 try {
-                    $response = ($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode=${variant}"));
+                    $response = ($this->client->get("{$this->endpoints['transmission']}?eu_type_goedkeuringssleutel={$approvedKeyFiltered}&eeg_variantcode={$variant}"));
                     $statusCode = $response->getStatusCode() ?? 404;
 
                     if ($statusCode !== 200) {
@@ -100,7 +105,7 @@ class RdwApi
             }
         }
 
-        return new Result($data);
+        return new Result($data, $fuelTypes);
     }
 
     protected function formatLicense(string $license): string

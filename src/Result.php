@@ -2,6 +2,8 @@
 
 namespace Programic\Rdw;
 
+use Illuminate\Support\Arr;
+
 /**
  * @property string|null $registration_number
  * @property string|null $vehicle_type
@@ -85,8 +87,9 @@ namespace Programic\Rdw;
 class Result
 {
     private $data = [];
+    private $fuelTypes = [];
 
-    public function __construct(array $rawData)
+    public function __construct(array $rawData, array $rawFuelTypes)
     {
         $translation = require(__DIR__ . '/Translation/en.php');
 
@@ -95,11 +98,29 @@ class Result
                 $this->data[$translation[$key]] = $value;
             }
         }
+
+        foreach($rawFuelTypes as $fuelTypeKey => $fielType) {
+            foreach ($fielType as $key => $value) {
+                if (isset($translation[$key])) {
+                    $this->fuelTypes[$fuelTypeKey][$translation[$key]] = $value;
+                }
+            }
+        }
     }
 
     public function toArray(): array
     {
-        return $this->data;
+        return [...$this->data, 'fuels' => $this->fuelTypes];
+    }
+
+    public function fuels(): array
+    {
+        return $this->fuelTypes;
+    }
+
+    public function fuelTypes(): array
+    {
+        return Arr::pluck($this->fuelTypes, 'fuel_description');
     }
 
     public function __get($key)
