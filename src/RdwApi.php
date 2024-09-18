@@ -17,7 +17,6 @@ class RdwApi
         'bodywork'          => 'vezc-m2t6.json',
         'bodywork_specific' => 'jhie-znh9.json',
         'vehicle_class'     => 'kmfi-hrps.json',
-        'transmission'      => 'r7cw-67gs.json',
     ];
 
     /**
