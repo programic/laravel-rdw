@@ -106,6 +106,10 @@ class Result
                 }
             }
         }
+
+        if (in_array('Benzine', $this->fuelTypes()) && in_array('Elektriciteit', $this->fuelTypes())) {
+            $this->fuel_description = 'Hybride';
+        }
     }
 
     public function toArray(): array
@@ -122,6 +126,7 @@ class Result
     {
         return Arr::pluck($this->fuelTypes, 'fuel_description');
     }
+
 
     public function __get($key)
     {
